@@ -1,3 +1,5 @@
+csrf_token = $('body').attr('class'); 
+
 function capitale(texte) {
 	// atao majuscule premiere lettre
 	return texte.charAt(0).toUpperCase() + texte.slice(1);
@@ -78,13 +80,11 @@ function inscription(val){
 }
 
 function sInscrire(nom, prenom, mail, phone, password, csrf_token){
-	alert(csrf_token);
 	$.post(
 		
 		"/create_account",
 		{
 			csrfmiddlewaretoken: csrf_token,
-			inscription: 1,
 			nom: nom.toUpperCase(),
 			prenom:capitale(prenom),
 			mail: mail,
@@ -113,9 +113,9 @@ function verifie_password(obj){
 	
 	if (/^[a-zA-Z]{1}[a-zA-Z_.0-9]{1,}@[a-z]{3,}.[a-z]{2,4}$/.test(mail.val())){
 		$.post(
-			'back-office/script/service.php',
+			'/connect',
 			{
-				connexion: 1,
+				csrfmiddlewaretoken: csrf_token,
 				mail: mail.val(),
 				password: password.val()
 			},
@@ -173,7 +173,7 @@ async function processAchat(event){
 	if (/^[0-9]{4}$/.test(val)){
 		mail = event.data.mail;
 		game = event.data.prod;
-		html = `<div class='form-group'> <img style="margin-left: 46%; margin-right: 48%" src='public/images/loading.gif' alt="chargement..."/> </div>`;
+		html = `<div class='form-group'> <img style="margin-left: 46%; margin-right: 48%" src='static/Application/public/images/loading.gif' alt="chargement..."/> </div>`;
 		event.data.objet.parent().after(html);
 		await sleep(4000);
 		event.data.objet.parents('.modal').modal('hide');
@@ -185,18 +185,16 @@ async function processAchat(event){
 
 
 $(function() {
-
+	let csrf_token = $('body').attr('class');
 	$.post(
-		'back-office/script/service.php',
+		'/get_game',
 		{
-			gamelist: 1,
+			csrfmiddlewaretoken: csrf_token,
 		},
 		list_game
 	);
 
-	function list_game(data){
-		dataP = new Array(JSON.parse(data));
-
+	function list_game(dataP){
 		Mmod = $('#play');
 		buy = $('#acheter');
 		mod = $('#game_model');
@@ -204,7 +202,7 @@ $(function() {
 			tmp = mod.clone();
 			tmp.attr('id', dataP[0][i][1])
 			tmp.css('display', 'block');
-			tmp.find('img').attr('src', dataP[0][i][2]);
+			tmp.find('img').attr('src', `static/Application/${dataP[0][i][2]}`);
 			tmp.find('h6>a').text(dataP[0][i][1]);
 			tmp.find('#cat').text(dataP[0][i][3]);
 			tmp.find('.price').text(makespace(dataP[0][i][5]) + " Ar");
@@ -217,7 +215,7 @@ $(function() {
 			Mtmp.attr('id', 'play'+dataP[0][i][0]);
 			Mtmp.find('h4').text(dataP[0][i][1]);
 			Mtmp.find('h6').text(dataP[0][i][1]);
-			Mtmp.find('source').attr('src', dataP[0][i][4]);
+			Mtmp.find('source').attr('src', `static/Application/${dataP[0][i][4]}`);
 			Mtmp.find('.text-muted').text(dataP[0][i][3]);
 			Mtmp.find('.pricemodal').text(makespace(dataP[0][i][5]) + " Ar");
 			Mtmp.find('.achatB').attr('href','#acheter'+ dataP[0][i][0]);
@@ -229,7 +227,7 @@ $(function() {
 
 			buyTmp = buy.clone();
 			buyTmp.attr('id', 'acheter' + dataP[0][i][0]);
-			buyTmp.find('img').attr('src', dataP[0][i][2]);
+			buyTmp.find('img').attr('src', `static/Application/${dataP[0][i][2]}`);
 			buyTmp.find('img').attr('alt', dataP[0][i][1]);
 
 			buy.after(buyTmp);

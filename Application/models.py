@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 
 class Game(models.Model):
     titre = models.CharField(max_length=50)
-    couverture = models.URLField()
+    couverture = models.CharField(max_length=250)
     categorie = models.CharField(max_length=50)
-    gameplay = models.URLField()
+    gameplay = models.CharField(max_length=250)
     prix = models.IntegerField()
 
 

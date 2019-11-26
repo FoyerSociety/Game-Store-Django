@@ -24,7 +24,7 @@
             }
         </style>
 
-        <body>
+        <body class="{{ csrf_token }}">
     
             <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient" id="accueil">
                 <div class="container"><a class="navbar-brand logo" href="index.html" style="font-size: 35px;" data-scroll-nav="0"><i class="fa fa-gamepad" style="font-size: 50px !important;"></i> G-Store</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -38,7 +38,6 @@
                                     <button class="btn-submit" onclick="search_game($('#zavatra').val())" type="button"><i class="fa fa-search"></i></button>
                                 </form>
                             </li>
-                            <li class="nav-item" role="presentation" onclick="openNav()" ><a class="nav-link" style="cursor: pointer"><i class="fa fa-bars"></i> Menu</a></li>
                             <li class="nav-item" role="presentation"><a class="nav-link" href="#inscrire" data-toggle="modal"><i class="fa fa-pencil"></i> S'inscrire</a></li>
                             <li class="nav-item" role="presentation"><a class="nav-link" href="index.html" data-scroll-nav="2"><i class="fa fa-envelope"></i> Contact</a></li>
                         </ul>
@@ -336,12 +335,6 @@
             </div>
 
 
-            <div id="mySidenav" class="sidenav">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <a href="view/sommaire.html" class="accordion acc" style="padding-bottom: 10% !important;"><i class="fa fa-bars bar"></i> Sommaire</a>
-                <a href="view/resolution.html" class="accordion acc" style="padding-bottom: 10% !important;"><i class="fa fa-bars bar"></i> Résolution d'équation</a>
-                <a href="view/cycle.html" class="accordion acc" style="padding-bottom: 10% !important;"><i class="fa fa-bars bar"></i> Calcul menstruel</a>
-            </div>
 
 
             <script src="{% static 'Application/public/js/jquery.min.js' %}"></script>
